@@ -2,12 +2,12 @@ const asyncHandler = require('express-async-handler')
 
 const Autos = require('../model/autosModel')
 
-const getAuto = asyncHandler(async (req,res) => {
-    const auto = await Autos.find({ user: req.user.id})
+const getAuto = asyncHandler(async (req, res) => {
+    const auto = await Autos.find({ user: req.user.id })
     res.status(200).json(auto)
 })
 
-const setAuto = asyncHandler(async (req,res) => {
+const setAuto = asyncHandler(async (req, res) => {
     if (!req.body.Modelo) {
         res.status(400)
         throw new Error('Por favor teclea el Modelo del auto')
@@ -31,27 +31,38 @@ const setAuto = asyncHandler(async (req,res) => {
 
 })
 
-const updateAuto = asyncHandler(async (req,res) => {
+const updateAuto = asyncHandler(async (req, res) => {
 
     const auto = await Autos.findById(req.params.id)
 
-    if(!auto) {
+    if (!auto) {
         res.status(400)
         throw new Error('Registro no encontrado')
     }
 
-    const updatedAuto = await Autos.findByIdAndUpdate(req.params.id,req.body, {new:true})
+    //verificamos que el user de la tarea sea igual que esl user del token
+    if (tarea.user.toString() !== req.user.id) {
+        res.status(401)
+        throw new Error('Acceso no autorizado')
+    }
+
+    const updatedAuto = await Autos.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
     res.status(200).json(updatedAuto)
 })
 
-const deleteAuto = asyncHandler(async (req,res) => {
+const deleteAuto = asyncHandler(async (req, res) => {
 
     const auto = await Autos.findById(req.params.id)
 
-    if(!auto) {
+    if (!auto) {
         res.status(400)
         throw new Error('Registro no encontrado')
+    }
+
+    if(!auto.user.toString() !== req.user.id) {
+        res.status(401)
+        throw new Error('Acceso no autorizado')
     }
 
     const deletedAuto = await Autos.findByIdAndDelete(req.params.id)
