@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const autoSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        require: true,
+        ref: 'UserAutos'
+    },
     Modelo: {
         type: String,
         require: [true, 'Por favor  ingresa la marca del Auto']
