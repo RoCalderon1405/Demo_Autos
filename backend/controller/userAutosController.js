@@ -56,7 +56,6 @@ const loginUser = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Credenciales incorrectas')
     }
-    res.json({ message: 'Login Usuario' })
 })
 
 const generateToken = (id) => {

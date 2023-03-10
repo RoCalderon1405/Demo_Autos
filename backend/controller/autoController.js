@@ -60,7 +60,7 @@ const deleteAuto = asyncHandler(async (req, res) => {
         throw new Error('Registro no encontrado')
     }
 
-    if(auto.user.toString() !== req.user.id) {
+    if (auto.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('Acceso no autorizado')
     }
