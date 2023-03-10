@@ -40,8 +40,8 @@ const updateAuto = asyncHandler(async (req, res) => {
         throw new Error('Registro no encontrado')
     }
 
-    //verificamos que el user de la tarea sea igual que esl user del token
-    if (tarea.user.toString() !== req.user.id) {
+    //verificamos que el user del auto sea igual que esl user del token
+    if (auto.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('Acceso no autorizado')
     }
@@ -60,7 +60,7 @@ const deleteAuto = asyncHandler(async (req, res) => {
         throw new Error('Registro no encontrado')
     }
 
-    if(!auto.user.toString() !== req.user.id) {
+    if(auto.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('Acceso no autorizado')
     }
